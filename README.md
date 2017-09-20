@@ -1,1 +1,1 @@
-# jfiglet-maven-plugin [![Build Status](https://travis-ci.org/mcwarman/jfiglet-maven-plugin.svg?branch=develop)](https://travis-ci.org/mcwarman/jfiglet-maven-plugin)
+# jfiglet-maven-plugin [![Build Status](https://travis-ci.org/mcwarman/jfiglet-maven-plugin.svg?branch=develop)](https://travis-ci.org/mcwarman/jfiglet-maven-plugin) [![codecov](https://codecov.io/gh/mcwarman/jfiglet-maven-plugin/branch/develop/graph/badge.svg)](https://codecov.io/gh/mcwarman/jfiglet-maven-plugin)
