@@ -1,4 +1,8 @@
 language: java
 
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
-script: mvn verify -Djacoco.skip=true -B
+install: 
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
+script: 
+  - mvn verify -Djacoco.skip=true -B
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
