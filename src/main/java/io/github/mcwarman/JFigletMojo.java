@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- * <p>
+ * 
  * Maven plugin that generates figlet text based on the message set, and either:
  * <ul>
  *   <li>Send output to log</li>
  *   <li>Write output to file</li>
  * </ul>
- * </p>
+ *
  *
  * @author mcwarman
  */
@@ -57,14 +57,14 @@ public class JFigletMojo extends AbstractMojo
   protected boolean suppressFile;
 
   /**
-   * File to write message to. Optional, default <code>${project.build.directory/figlet.txt}</code>.<br/>
+   * File to write message to. Optional, default <code>${project.build.directory/figlet.txt}</code>.<br>
    * NOTE: {@link #suppressFile} needs to be set to true for this to take effect
    */
   @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/figlet.txt")
   protected File outputFile;
 
   /**
-   * If file present it will be overwritten. Optional, default false.<br/>
+   * If file present it will be overwritten. Optional, default false.<br>
    * NOTE: {@link #suppressFile} needs to be set to true for this to take effect
    */
   @Parameter (property = "overwriteFile", defaultValue = "false")
