@@ -8,7 +8,7 @@
   <packaging>maven-plugin</packaging>
 
   <name>JFiglet Maven Plugin</name>
-  <description>A maven plugin that wraps the generation of figlet text.</description>
+  <description>A maven plugin for the generation of figlet text.</description>
 
   <url>https://github.com/mcwarman/jfiglet-maven-plugin</url>
 
