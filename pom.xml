@@ -238,6 +238,24 @@
         <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
+      <plugins>
+        <plugin>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>${project.artifactId}</artifactId>
+          <version>${project.version}</version>
+          <configuration>
+            <message>${project.artifactId}:${project.version}</message>
+          </configuration>
+          <executions>
+            <execution>
+              <id>jfiglet</id>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
     </plugins>
   </build>
   <profiles>
