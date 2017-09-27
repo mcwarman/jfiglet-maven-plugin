@@ -243,7 +243,7 @@
         <artifactId>${project.artifactId}</artifactId>
         <version>${project.version}</version>
         <configuration>
-          <message>${project.artifactId}:${project.version}</message>
+          <message>SUCCESS!</message>
         </configuration>
         <executions>
           <execution>
