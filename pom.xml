@@ -243,11 +243,12 @@
         <artifactId>${project.artifactId}</artifactId>
         <version>${project.version}</version>
         <configuration>
-          <message>SUCCESS!</message>
+          <message>Version:&#xA;${project.version}</message>
         </configuration>
         <executions>
           <execution>
             <id>jfiglet</id>
+            <phase>verify</phase>
             <goals>
               <goal>generate</goal>
             </goals>

@@ -4,7 +4,7 @@ sudo: false
 install: 
   - mvn install -Prelease-artefacts -DskipTests=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
 script: 
-  - mvn verify jfiglet:generate -B
+  - mvn verify -B
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - if [ "$TRAVIS_BRANCH" = 'develop' ] && [ "$TRAVIS_PULL_REQUEST" == 'false' ]; then mvn deploy -Prelease-artefacts -DskipTests=true -Dinvoker.skip=true -Djacoco.skip=true --settings .travis-m2-settings.xml -B; fi
