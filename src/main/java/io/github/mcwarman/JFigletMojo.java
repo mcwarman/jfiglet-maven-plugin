@@ -88,11 +88,15 @@ public class JFigletMojo extends AbstractMojo
 
   private String convertMessage() throws MojoExecutionException {
     try {
-      if (fontFile == null) {
-        return FigletFont.convertOneLine(message);
-      } else {
-        return FigletFont.convertOneLine(fontFile, message);
+      StringBuilder result = new StringBuilder();
+      for (String line : message.split("\n")) {
+        if (fontFile == null) {
+          result.append(FigletFont.convertOneLine(line));
+        } else {
+          result.append(FigletFont.convertOneLine(fontFile, line));
+        }
       }
+      return result.toString();
     } catch (IOException e) {
       throw new MojoExecutionException("Failed to generate FIGFont", e);
     }
