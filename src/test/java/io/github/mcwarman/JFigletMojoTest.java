@@ -189,6 +189,15 @@ public class JFigletMojoTest {
     Mockito.verify(mojo).getPrintStream();
   }
 
+  @Test
+  public void testExecutePrintMultiLine() throws Exception {
+    mojo.printAppendNewLine = true;
+    mojo.message = "Hello\nWorld";
+    mojo.execute();
+    assertNotNull(log.lastInfoCharSequence);
+    assertEqualsAsciiArtMultiLine(log.lastInfoCharSequence.toString());
+  }
+
   private void assertEqualsAsciiArt(String asciiArt, boolean printAppendNewLine) {
     String expectedAsciiArt = (printAppendNewLine ? LINE_ENDING : "") +
         "  _   _          _   _            __        __                 _       _ " + LINE_ENDING +
@@ -197,6 +206,23 @@ public class JFigletMojoTest {
         " |  _  | |  __/ | | | | | (_) |     \\ V  V /   | (_) | | |    | | | (_| |" + LINE_ENDING +
         " |_| |_|  \\___| |_| |_|  \\___/       \\_/\\_/     \\___/  |_|    |_|  \\__,_|" + LINE_ENDING +
         "                                                                         " + LINE_ENDING;
+    assertEquals(expectedAsciiArt, asciiArt);
+  }
+
+  private void assertEqualsAsciiArtMultiLine(String asciiArt) {
+    String expectedAsciiArt = LINE_ENDING +
+        "  _   _          _   _         " + LINE_ENDING +
+        " | | | |   ___  | | | |   ___  " + LINE_ENDING +
+        " | |_| |  / _ \\ | | | |  / _ \\ " + LINE_ENDING +
+        " |  _  | |  __/ | | | | | (_) |" + LINE_ENDING +
+        " |_| |_|  \\___| |_| |_|  \\___/ " + LINE_ENDING +
+        "                               " + LINE_ENDING +
+        " __        __                 _       _ " + LINE_ENDING +
+        " \\ \\      / /   ___    _ __  | |   __| |" + LINE_ENDING +
+        "  \\ \\ /\\ / /   / _ \\  | '__| | |  / _` |" + LINE_ENDING +
+        "   \\ V  V /   | (_) | | |    | | | (_| |" + LINE_ENDING +
+        "    \\_/\\_/     \\___/  |_|    |_|  \\__,_|" + LINE_ENDING +
+        "                                        " + LINE_ENDING;
     assertEquals(expectedAsciiArt, asciiArt);
   }
 
