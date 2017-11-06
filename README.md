@@ -1,4 +1,4 @@
-# jfiglet-maven-plugin [![Build Status](https://travis-ci.org/mcwarman/jfiglet-maven-plugin.svg?branch=develop)](https://travis-ci.org/mcwarman/jfiglet-maven-plugin) [![codecov](https://codecov.io/gh/mcwarman/jfiglet-maven-plugin/branch/develop/graph/badge.svg)](https://codecov.io/gh/mcwarman/jfiglet-maven-plugin) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+# jfiglet-maven-plugin [![Build Status](https://travis-ci.org/mcwarman/jfiglet-maven-plugin.svg?branch=develop)](https://travis-ci.org/mcwarman/jfiglet-maven-plugin) [![codecov](https://codecov.io/gh/mcwarman/jfiglet-maven-plugin/branch/develop/graph/badge.svg)](https://codecov.io/gh/mcwarman/jfiglet-maven-plugin) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Maven Central](https://img.shields.io/maven-central/v/io.github.mcwarman/jfiglet-maven-plugin.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.github.mcwarman%22%20AND%20a%3A%22jfiglet-maven-plugin%22)
 
 ```
 $ mvn io.github.mcwarman:jfiglet-maven-plugin:0.0.1:generate -Dmessage="jfiglet-maven-plugin"
