@@ -1,0 +1,15 @@
+language: java
+sudo: false 
+
+install: 
+  - mvn install -Prelease-artefacts -DskipTests=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
+script: 
+  - mvn verify -B
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - ./before-deploy.sh
+  - ./deploy.sh
+
+cache:
+  directories:
+    - $HOME/.m2
