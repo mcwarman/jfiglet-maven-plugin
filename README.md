@@ -25,3 +25,15 @@ $ mvn io.github.mcwarman:jfiglet-maven-plugin:1.0.0-SNAPSHOT:generate -Dmessage=
 [INFO] Final Memory: 8M/245M
 [INFO] ------------------------------------------------------------------------
 ```
+
+## Performing Release
+
+```
+git flow release start 0.0.1
+mvn versions:set -DnewVersion=0.0.1
+git flow release publish 0.0.1
+git flow release finish 0.0.1
+mvn versions:set -DnewVersion=0.0.2-SNAPSHOT
+git push --all origin
+git push --tags
+```
