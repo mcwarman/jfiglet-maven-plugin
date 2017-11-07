@@ -11,15 +11,15 @@ public class StubLog implements Log {
   }
 
   public void debug(CharSequence charSequence) {
-
+    //Stub method deliberately empty
   }
 
   public void debug(CharSequence charSequence, Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public void debug(Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public boolean isInfoEnabled() {
@@ -31,11 +31,11 @@ public class StubLog implements Log {
   }
 
   public void info(CharSequence charSequence, Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public void info(Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public boolean isWarnEnabled() {
@@ -43,15 +43,15 @@ public class StubLog implements Log {
   }
 
   public void warn(CharSequence charSequence) {
-
+    //Stub method deliberately empty
   }
 
   public void warn(CharSequence charSequence, Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public void warn(Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public boolean isErrorEnabled() {
@@ -59,14 +59,14 @@ public class StubLog implements Log {
   }
 
   public void error(CharSequence charSequence) {
-
+    //Stub method deliberately empty
   }
 
   public void error(CharSequence charSequence, Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 
   public void error(Throwable throwable) {
-
+    //Stub method deliberately empty
   }
 }
