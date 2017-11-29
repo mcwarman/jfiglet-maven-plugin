@@ -248,24 +248,29 @@
         <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
-      <!--plugin>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>${project.artifactId}</artifactId>
-        <version>${project.version}</version>
-        <configuration>
-          <message>Version:&#xA;${project.version}</message>
-        </configuration>
-        <executions>
-          <execution>
-            <id>jfiglet</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin-->
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>${project.artifactId}</artifactId>
+          <version>${project.version}</version>
+          <configuration>
+            <message>${project.artifactId}&#xA;${project.version}</message>
+            <suppressFile>false</suppressFile>
+            <overwriteFile>true</overwriteFile>
+          </configuration>
+          <executions>
+            <execution>
+              <id>jfiglet</id>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   <profiles>
     <profile>
