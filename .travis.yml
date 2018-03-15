@@ -4,8 +4,6 @@ sudo: false
 before_install:
   - sudo apt-get install jq
   - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
 install: 
   - mvn install -Prelease-artefacts -DskipTests=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
 before_script:
@@ -16,7 +14,6 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r ./target/site/jacoco-aggregate/jacoco.xml
-  - ./cc-test-reporter after-build --coverage-input-type jacoco --exit-code $TRAVIS_TEST_RESULT ./target/site/jacoco-aggregate/jacoco.xml
   - ./before-deploy.sh
   - ./deploy.sh
 
