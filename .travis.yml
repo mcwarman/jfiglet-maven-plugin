@@ -6,8 +6,6 @@ before_install:
   - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 install: 
   - mvn install -Prelease-artefacts -DskipTests=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
-before_script:
- - ./cc-test-reporter before-build
 script: 
   - mvn verify -B
   - mvn io.github.mcwarman:jfiglet-maven-plugin:generate -B
