@@ -8,7 +8,7 @@ before_install:
   - chmod +x ./cc-test-reporter
 install: 
   - mvn install -Prelease-artefacts -DskipTests=true -Dinvoker.skip=true -Djacoco.skip=true -B -V
-before_scrip:
+before_script:
  - ./cc-test-reporter before-build
 script: 
   - mvn verify -B
