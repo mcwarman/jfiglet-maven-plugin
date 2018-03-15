@@ -13,11 +13,10 @@ before_script:
 script: 
   - mvn verify -B
   - mvn io.github.mcwarman:jfiglet-maven-plugin:generate -B
-after_script:
-  - ./cc-test-reporter after-build --coverage-input-type jacoco --exit-code $TRAVIS_TEST_RESULT
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r ./target/site/jacoco-aggregate/jacoco.xml
+  - ./cc-test-reporter after-build --coverage-input-type jacoco --exit-code $TRAVIS_TEST_RESULT
   - ./before-deploy.sh
   - ./deploy.sh
 
