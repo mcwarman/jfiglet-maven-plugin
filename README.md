@@ -4,14 +4,14 @@
 
 
 ```
-$ mvn io.github.mcwarman:jfiglet-maven-plugin:0.0.1:generate -Dmessage="jfiglet-maven-plugin"
+$  mvn io.github.mcwarman:jfiglet-maven-plugin:0.0.2:generate -Dmessage="jfiglet-maven-plugin"
 [INFO] Scanning for projects...
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building Maven Stub Project (No POM) 1
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- jfiglet-maven-plugin:0.0.1:generate (default-cli) @ standalone-pom ---
+[INFO] --- jfiglet-maven-plugin:0.0.2:generate (default-cli) @ standalone-pom ---
 [INFO]
     _    __   _           _          _                                                                        _                   _
    (_)  / _| (_)   __ _  | |   ___  | |_           _ __ ___     __ _  __   __   ___   _ __            _ __   | |  _   _    __ _  (_)  _ __
@@ -23,8 +23,8 @@ $ mvn io.github.mcwarman:jfiglet-maven-plugin:0.0.1:generate -Dmessage="jfiglet-
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 0.635 s
-[INFO] Finished at: 2017-11-06T21:06:41Z
+[INFO] Total time: 0.679 s
+[INFO] Finished at: 2018-06-07T11:14:43+01:00
 [INFO] Final Memory: 8M/245M
 [INFO] ------------------------------------------------------------------------
 ```
@@ -32,12 +32,12 @@ $ mvn io.github.mcwarman:jfiglet-maven-plugin:0.0.1:generate -Dmessage="jfiglet-
 ## Performing Release
 
 ```
-git flow release start 0.0.1
-mvn versions:set -DgenerateBackupPoms=false -DnewVersion=0.0.1 
-git commit -a -m "Increment release [0.0.1]"
-git flow release publish 0.0.1
-git flow release finish 0.0.1
-mvn versions:set -DgenerateBackupPoms=false -DnewVersion=0.0.2-SNAPSHOT
-git commit -a -m "Increment snapshot release [0.0.2-SNAPSHOT]"
+git flow release start 0.0.3
+mvn versions:set -DgenerateBackupPoms=false -DnewVersion=0.0.3
+git commit -a -m "Increment release [0.0.3]"
+git flow release publish 0.0.3
+git flow release finish 0.0.3
+mvn versions:set -DgenerateBackupPoms=false -DnewVersion=0.0.4-SNAPSHOT
+git commit -a -m "Increment snapshot release [0.0.3-SNAPSHOT]"
 git push --mirror
 ```
