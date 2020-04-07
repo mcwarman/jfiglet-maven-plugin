@@ -36,7 +36,7 @@ public class JFigletMojo extends AbstractMojo
    * File containing figlet font configuration. Optional, Default standard.flf.
    */
   @Parameter(property = "fontFile")
-  protected File fontFile;
+  protected String fontFile;
 
   /**
    * Stops message being printed to log output. Optional, default false.
@@ -55,6 +55,12 @@ public class JFigletMojo extends AbstractMojo
    */
   @Parameter(property = "suppressFile", defaultValue = "true")
   protected boolean suppressFile;
+
+  /**
+   * Appends to existing banner file.
+   */
+  @Parameter(property = "forceAppend", defaultValue = "false")
+  protected boolean forceAppend;
 
   /**
    * File to write message to. Optional, default <code>${project.build.directory/figlet.txt}</code>.<br>
@@ -103,7 +109,7 @@ public class JFigletMojo extends AbstractMojo
   }
 
   private void checkFileAndCreateParentDirectory(){
-    if (outputFile.isDirectory() || (outputFile.exists() && !overwriteFile)) {
+    if ((outputFile.isDirectory() || (outputFile.exists() && !overwriteFile)) && !forceAppend) {
       throw new IllegalArgumentException(String.format("Output file is invalid argument [%s]: directory [%s], exists [%s], overwrite [%s]", outputFile.getAbsolutePath(), outputFile.isDirectory(), outputFile.exists(), overwriteFile));
     }
     if (outputFile.getParentFile().exists()) {
@@ -116,6 +122,6 @@ public class JFigletMojo extends AbstractMojo
   }
 
   PrintStream getPrintStream() throws IOException {
-    return new PrintStream(new FileOutputStream(outputFile, false));
+    return new PrintStream(new FileOutputStream(outputFile, forceAppend));
   }
 }

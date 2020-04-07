@@ -75,7 +75,7 @@ public class JFigletMojoTest {
 
   @Test
   public void testExecuteFontFile() throws Exception {
-    mojo.fontFile = new File(JFigletMojoTest.class.getClassLoader().getResource("standard.flf").getFile());
+    mojo.fontFile = "classpath:/standard.flf";
     mojo.suppressPrint = true;
     mojo.suppressFile = false;
     File folder = tempFolder.getRoot();
@@ -90,7 +90,7 @@ public class JFigletMojoTest {
 
   @Test(expected = MojoExecutionException.class)
   public void testExecuteFontFileFailure() throws Exception {
-    mojo.fontFile = new File(tempFolder.getRoot(), "does-not-exist.flf");
+    mojo.fontFile = "classpath:/does-not-exist.flf";
     mojo.suppressPrint = true;
     mojo.execute();
   }
