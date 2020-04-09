@@ -97,23 +97,16 @@ public class JFigletMojo extends AbstractMojo
     try {
       StringBuilder result = new StringBuilder();
       boolean usingFontInClassPath = (font == null || font.startsWith("classpath:/"));
-      File fontFile = null;
-
-      try {
-        fontFile = (usingFontInClassPath ? null :
-            new File(getClass().getClassLoader().getResource(font).getFile()));
-      } catch (NullPointerException up) {
-        throw new IOException(up);
-      }
+      File fontFile = initializeFileByFileName(usingFontInClassPath);
 
       for (String line : message.split("\n")) {
         if (font == null) {
           result.append(FigletFont.convertOneLine(line));
         } else {
-          if (!usingFontInClassPath) {
-            result.append(FigletFont.convertOneLine(fontFile, line));
-          } else {
+          if (usingFontInClassPath) {
             result.append(FigletFont.convertOneLine(font, line));
+          } else {
+            result.append(FigletFont.convertOneLine(fontFile, line));
           }
         }
       }
@@ -121,6 +114,17 @@ public class JFigletMojo extends AbstractMojo
     } catch (IOException e) {
       throw new MojoExecutionException("Failed to generate FIGFont", e);
     }
+  }
+
+  private File initializeFileByFileName(boolean usingFontInClassPath) throws IOException {
+    File fontFile;
+    try {
+      fontFile = (usingFontInClassPath ? null :
+          new File(getClass().getClassLoader().getResource(font).getFile()));
+    } catch (NullPointerException up) {
+      throw new IOException(up);
+    }
+    return fontFile;
   }
 
   private void checkFileAndCreateParentDirectory(){
