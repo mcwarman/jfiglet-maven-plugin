@@ -36,7 +36,8 @@ public class JFigletMojo extends AbstractMojo
    * File containing figlet font configuration. Optional, Default standard.flf.
    */
   @Parameter(property = "fontFile")
-  protected String fontFile;
+  // Could be a file or file name.  Retaining prop name for backwards compatibility.
+  protected String font; 
 
   /**
    * Stops message being printed to log output. Optional, default false.
@@ -95,11 +96,25 @@ public class JFigletMojo extends AbstractMojo
   private String convertMessage() throws MojoExecutionException {
     try {
       StringBuilder result = new StringBuilder();
+      boolean usingFontInClassPath = (font == null || font.startsWith("classpath:/"));
+      File fontFile = null;
+
+      try {
+        fontFile = (usingFontInClassPath ? null :
+            new File(getClass().getClassLoader().getResource(font).getFile()));
+      } catch (NullPointerException up) {
+        throw new IOException(up);
+      }
+
       for (String line : message.split("\n")) {
-        if (fontFile == null) {
+        if (font == null) {
           result.append(FigletFont.convertOneLine(line));
         } else {
-          result.append(FigletFont.convertOneLine(fontFile, line));
+          if (!usingFontInClassPath) {
+            result.append(FigletFont.convertOneLine(fontFile, line));
+          } else {
+            result.append(FigletFont.convertOneLine(font, line));
+          }
         }
       }
       return result.toString();
