@@ -74,8 +74,8 @@ public class JFigletMojoTest {
   }
 
   @Test
-  public void testExecuteFontFileUsingClasspath() throws Exception {
-    mojo.font = "classpath:/standard.flf";
+  public void testExecuteFontFile() throws Exception {
+    mojo.fontFile = new File(JFigletMojoTest.class.getClassLoader().getResource("standard.flf").getFile());
     mojo.suppressPrint = true;
     mojo.suppressFile = false;
     File folder = tempFolder.getRoot();
@@ -86,37 +86,14 @@ public class JFigletMojoTest {
     assertTrue(mojo.outputFile.exists());
     String asciiArt = new String(Files.readAllBytes(mojo.outputFile.toPath()));
     assertEqualsAsciiArt(asciiArt, false);
-  }
-
-  @Test
-  public void testExecuteFontFileUsingFileName() throws Exception {
-    mojo.font = "standard.flf";
-    mojo.suppressPrint = true;
-    mojo.suppressFile = false;
-    File folder = tempFolder.getRoot();
-    mojo.outputFile = new File(folder, "figlet.txt");
-    assertFalse(mojo.outputFile.exists());
-    mojo.execute();
-    assertNull(log.lastInfoCharSequence);
-    assertTrue(mojo.outputFile.exists());
-    String asciiArt = new String(Files.readAllBytes(mojo.outputFile.toPath()));
-    assertEqualsAsciiArt(asciiArt, false);
-  }
-
-  @Test(expected = MojoExecutionException.class)
-  public void testExecuteFontFileInClassPathFailure() throws Exception {
-    mojo.font = "classpath:/does-not-exist.flf";
-    mojo.suppressPrint = true;
-    mojo.execute();
   }
 
   @Test(expected = MojoExecutionException.class)
   public void testExecuteFontFileFailure() throws Exception {
-    mojo.font = "does-not-exist.flf";
+    mojo.fontFile = new File(tempFolder.getRoot(), "does-not-exist.flf");
     mojo.suppressPrint = true;
     mojo.execute();
   }
-
 
   @Test(expected = IllegalArgumentException.class)
   public void testOutputFileIsAFolder() throws Exception {
