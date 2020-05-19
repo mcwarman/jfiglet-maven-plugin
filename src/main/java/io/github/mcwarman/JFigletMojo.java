@@ -36,8 +36,7 @@ public class JFigletMojo extends AbstractMojo
    * File containing figlet font configuration. Optional, Default standard.flf.
    */
   @Parameter(property = "fontFile")
-  // Could be a file or file name.  Retaining prop name for backwards compatibility.
-  protected String font; 
+  protected File fontFile;
 
   /**
    * Stops message being printed to log output. Optional, default false.
@@ -56,12 +55,6 @@ public class JFigletMojo extends AbstractMojo
    */
   @Parameter(property = "suppressFile", defaultValue = "true")
   protected boolean suppressFile;
-
-  /**
-   * Appends to existing banner file.
-   */
-  @Parameter(property = "forceAppend", defaultValue = "false")
-  protected boolean forceAppend;
 
   /**
    * File to write message to. Optional, default <code>${project.build.directory/figlet.txt}</code>.<br>
@@ -96,18 +89,11 @@ public class JFigletMojo extends AbstractMojo
   private String convertMessage() throws MojoExecutionException {
     try {
       StringBuilder result = new StringBuilder();
-      boolean usingFontInClassPath = (font == null || font.startsWith("classpath:/"));
-      File fontFile = initializeFileByFileName(usingFontInClassPath);
-
       for (String line : message.split("\n")) {
-        if (font == null) {
+        if (fontFile == null) {
           result.append(FigletFont.convertOneLine(line));
         } else {
-          if (usingFontInClassPath) {
-            result.append(FigletFont.convertOneLine(font, line));
-          } else {
-            result.append(FigletFont.convertOneLine(fontFile, line));
-          }
+          result.append(FigletFont.convertOneLine(fontFile, line));
         }
       }
       return result.toString();
@@ -116,19 +102,8 @@ public class JFigletMojo extends AbstractMojo
     }
   }
 
-  private File initializeFileByFileName(boolean usingFontInClassPath) throws IOException {
-    File fontFile;
-    try {
-      fontFile = (usingFontInClassPath ? null :
-          new File(getClass().getClassLoader().getResource(font).getFile()));
-    } catch (NullPointerException up) {
-      throw new IOException(up);
-    }
-    return fontFile;
-  }
-
   private void checkFileAndCreateParentDirectory(){
-    if ((outputFile.isDirectory() || (outputFile.exists() && !overwriteFile)) && !forceAppend) {
+    if (outputFile.isDirectory() || (outputFile.exists() && !overwriteFile)) {
       throw new IllegalArgumentException(String.format("Output file is invalid argument [%s]: directory [%s], exists [%s], overwrite [%s]", outputFile.getAbsolutePath(), outputFile.isDirectory(), outputFile.exists(), overwriteFile));
     }
     if (outputFile.getParentFile().exists()) {
@@ -141,6 +116,6 @@ public class JFigletMojo extends AbstractMojo
   }
 
   PrintStream getPrintStream() throws IOException {
-    return new PrintStream(new FileOutputStream(outputFile, forceAppend));
+    return new PrintStream(new FileOutputStream(outputFile, false));
   }
 }
