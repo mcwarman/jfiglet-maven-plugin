@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 
 public class JFigletMojoTest {
 
@@ -34,6 +35,7 @@ public class JFigletMojoTest {
     mojo.suppressPrint = false;
     mojo.suppressFile = true;
     mojo.overwriteFile = false;
+    mojo.appendFile = false;
   }
 
   @Test
@@ -153,6 +155,48 @@ public class JFigletMojoTest {
     assertEqualsAsciiArt(asciiArt, false);
   }
 
+  @Test
+  public void testOutputFileExistsAppend() throws Exception {
+    mojo.suppressPrint = true;
+    mojo.suppressFile = false;
+    mojo.overwriteFile = false;
+    mojo.appendFile = true;
+    File folder = tempFolder.getRoot();
+    mojo.outputFile = new File(folder, "figlet.txt");
+    assertFalse(mojo.outputFile.exists());
+    mojo.message = "Hello";
+    mojo.execute();
+    assertNull(log.lastInfoCharSequence);
+    assertTrue(mojo.outputFile.exists());
+    mojo.message = "World";
+    mojo.execute();
+    assertNull(log.lastInfoCharSequence);
+    assertTrue(mojo.outputFile.exists());
+    String asciiArt = new String(Files.readAllBytes(mojo.outputFile.toPath()));
+    assertEqualsAsciiArtMultiLine(asciiArt, false);
+  }
+
+  @Test
+  public void testOutputFileExistsOverwriteOverAppend() throws Exception {
+    mojo.suppressPrint = true;
+    mojo.suppressFile = false;
+    mojo.overwriteFile = true;
+    mojo.appendFile = true;
+    File folder = tempFolder.getRoot();
+    mojo.outputFile = new File(folder, "figlet.txt");
+    assertFalse(mojo.outputFile.exists());
+    mojo.message = "Hello";
+    mojo.execute();
+    assertNull(log.lastInfoCharSequence);
+    assertTrue(mojo.outputFile.exists());
+    mojo.message = "Hello World";
+    mojo.execute();
+    assertNull(log.lastInfoCharSequence);
+    assertTrue(mojo.outputFile.exists());
+    String asciiArt = new String(Files.readAllBytes(mojo.outputFile.toPath()));
+    assertEqualsAsciiArt(asciiArt, false);
+  }
+
   @Test(expected = IllegalArgumentException.class)
   public void testOutputFileParentIsFile() throws Exception {
     mojo.suppressFile = false;
@@ -185,7 +229,7 @@ public class JFigletMojoTest {
     mojo.suppressFile = false;
     File folder = new File(tempFolder.getRoot(), "target");
     mojo.outputFile = new File(folder, "file.txt");
-    Mockito.doThrow(new IOException()).when(mojo).getPrintStream();
+    Mockito.doThrow(new IOException()).when(mojo).getPrintStream(anyBoolean());
     try {
       mojo.execute();
       fail("Expected exception not thrown");
@@ -193,7 +237,7 @@ public class JFigletMojoTest {
       String expectedMessage = String.format("Failed to write to output file [%s]", mojo.outputFile.getAbsolutePath());
       assertEquals(expectedMessage, expected.getMessage());
     }
-    Mockito.verify(mojo).getPrintStream();
+    Mockito.verify(mojo).getPrintStream(false);
   }
 
   @Test
@@ -208,7 +252,7 @@ public class JFigletMojoTest {
     mojo.suppressFile = false;
     File folder = new File(tempFolder.getRoot(), "target");
     mojo.outputFile = new File(folder, "file.txt");
-    Mockito.doReturn(null).when(mojo).getPrintStream();
+    Mockito.doReturn(null).when(mojo).getPrintStream(anyBoolean());
     try {
       mojo.execute();
       fail("Expected exception not thrown");
@@ -216,7 +260,7 @@ public class JFigletMojoTest {
       String expectedMessage = String.format("Failed to write to output file [%s]", mojo.outputFile.getAbsolutePath());
       assertEquals(expectedMessage, expected.getMessage());
     }
-    Mockito.verify(mojo).getPrintStream();
+    Mockito.verify(mojo).getPrintStream(false);
   }
 
   @Test
@@ -225,7 +269,7 @@ public class JFigletMojoTest {
     mojo.message = "Hello\nWorld";
     mojo.execute();
     assertNotNull(log.lastInfoCharSequence);
-    assertEqualsAsciiArtMultiLine(log.lastInfoCharSequence.toString());
+    assertEqualsAsciiArtMultiLine(log.lastInfoCharSequence.toString(), true);
   }
 
   private void assertEqualsAsciiArt(String asciiArt, boolean printAppendNewLine) {
@@ -239,8 +283,8 @@ public class JFigletMojoTest {
     assertEquals(expectedAsciiArt, asciiArt);
   }
 
-  private void assertEqualsAsciiArtMultiLine(String asciiArt) {
-    String expectedAsciiArt = LINE_ENDING +
+  private void assertEqualsAsciiArtMultiLine(String asciiArt, boolean printAppendNewLine) {
+    String expectedAsciiArt = (printAppendNewLine ? LINE_ENDING : "")  +
         "  _   _          _   _         " + LINE_ENDING +
         " | | | |   ___  | | | |   ___  " + LINE_ENDING +
         " | |_| |  / _ \\ | | | |  / _ \\ " + LINE_ENDING +

@@ -65,17 +65,25 @@ public class JFigletMojo extends AbstractMojo
 
   /**
    * File to write message to. Optional, default <code>${project.build.directory/figlet.txt}</code>.<br>
-   * NOTE: {@link #suppressFile} needs to be set to true for this to take effect
+   * NOTE: {@link #suppressFile} needs to be set to false for this to take effect
    */
   @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/figlet.txt")
   protected File outputFile;
 
   /**
    * If file present it will be overwritten. Optional, default false.<br>
-   * NOTE: {@link #suppressFile} needs to be set to true for this to take effect
+   * NOTE: {@link #suppressFile} needs to be set to false for this to take effect
    */
   @Parameter (property = "overwriteFile", defaultValue = "false")
   protected boolean overwriteFile;
+
+  /**
+   * Appends to existing banner file.<br>
+   * NOTE: {@link #suppressFile} needs to be set to false for this to take effect, ignored if {@link #overwriteFile}
+   * is set to true.
+   */
+  @Parameter(property = "appendFile", defaultValue = "false")
+  protected boolean appendFile;
 
   public void execute() throws MojoExecutionException
   {
@@ -85,7 +93,7 @@ public class JFigletMojo extends AbstractMojo
     }
     if(!suppressFile){
       checkFileAndCreateParentDirectory();
-      try(PrintStream out = getPrintStream()) {
+      try(PrintStream out = getPrintStream(!overwriteFile && appendFile)) {
         out.print(asciiArt);
       } catch (IOException | NullPointerException e) {
         throw new MojoExecutionException(String.format("Failed to write to output file [%s]", outputFile.getAbsolutePath()));
@@ -114,8 +122,9 @@ public class JFigletMojo extends AbstractMojo
   }
 
   private void checkFileAndCreateParentDirectory(){
-    if (outputFile.isDirectory() || (outputFile.exists() && !overwriteFile)) {
-      throw new IllegalArgumentException(String.format("Output file is invalid argument [%s]: directory [%s], exists [%s], overwrite [%s]", outputFile.getAbsolutePath(), outputFile.isDirectory(), outputFile.exists(), overwriteFile));
+    if (outputFile.isDirectory() || ((outputFile.exists() && !overwriteFile) && !appendFile)) {
+      System.out.println(String.format("Output file is invalid argument [%s]: directory [%s], exists [%s], overwrite [%s], append [%s]", outputFile.getAbsolutePath(), outputFile.isDirectory(), outputFile.exists(), overwriteFile, appendFile));
+      throw new IllegalArgumentException(String.format("Output file is invalid argument [%s]: directory [%s], exists [%s], overwrite [%s], append [%s]", outputFile.getAbsolutePath(), outputFile.isDirectory(), outputFile.exists(), overwriteFile, appendFile));
     }
     if (outputFile.getParentFile().exists()) {
       if (outputFile.getParentFile().isFile()) {
@@ -126,7 +135,7 @@ public class JFigletMojo extends AbstractMojo
     }
   }
 
-  PrintStream getPrintStream() throws IOException {
-    return new PrintStream(new FileOutputStream(outputFile, false));
+  PrintStream getPrintStream(boolean appendFile) throws IOException {
+    return new PrintStream(new FileOutputStream(outputFile, appendFile));
   }
 }
