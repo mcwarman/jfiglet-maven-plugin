@@ -33,10 +33,17 @@ public class JFigletMojo extends AbstractMojo
   protected String message;
 
   /**
-   * File containing figlet font configuration. Optional, Default standard.flf.
+   * File containing figlet font configuration, not be used in conjunction with font, Optional.
    */
   @Parameter(property = "fontFile")
   protected File fontFile;
+
+  /**
+   * Location containing figlet font configuration, not be used in conjunction with fontFile. Optional.
+   */
+  @Parameter(property = "font")
+  protected String font;
+
 
   /**
    * Stops message being printed to log output. Optional, default false.
@@ -90,10 +97,14 @@ public class JFigletMojo extends AbstractMojo
     try {
       StringBuilder result = new StringBuilder();
       for (String line : message.split("\n")) {
-        if (fontFile == null) {
-          result.append(FigletFont.convertOneLine(line));
-        } else {
+        if (fontFile != null) {
           result.append(FigletFont.convertOneLine(fontFile, line));
+        } else {
+          if(font != null) {
+            result.append(FigletFont.convertOneLine(font, line));
+          } else {
+            result.append(FigletFont.convertOneLine(line));
+          }
         }
       }
       return result.toString();
