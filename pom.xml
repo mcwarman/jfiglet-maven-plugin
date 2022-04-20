@@ -47,7 +47,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <com.github.laylos.jfiglet.version>0.0.8</com.github.laylos.jfiglet.version>
+    <com.github.laylos.jfiglet.version>0.0.9</com.github.laylos.jfiglet.version>
   </properties>
 
   <dependencies>

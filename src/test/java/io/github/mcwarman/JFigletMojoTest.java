@@ -274,30 +274,31 @@ public class JFigletMojoTest {
 
   private void assertEqualsAsciiArt(String asciiArt, boolean printAppendNewLine) {
     String expectedAsciiArt = (printAppendNewLine ? LINE_ENDING : "") +
-        "  _   _          _   _            __        __                 _       _ " + LINE_ENDING +
-        " | | | |   ___  | | | |   ___     \\ \\      / /   ___    _ __  | |   __| |" + LINE_ENDING +
-        " | |_| |  / _ \\ | | | |  / _ \\     \\ \\ /\\ / /   / _ \\  | '__| | |  / _` |" + LINE_ENDING +
-        " |  _  | |  __/ | | | | | (_) |     \\ V  V /   | (_) | | |    | | | (_| |" + LINE_ENDING +
-        " |_| |_|  \\___| |_| |_|  \\___/       \\_/\\_/     \\___/  |_|    |_|  \\__,_|" + LINE_ENDING +
-        "                                                                         " + LINE_ENDING;
+        "  _   _      _ _        __        __         _     _ " + LINE_ENDING +
+        " | | | | ___| | | ___   \\ \\      / /__  _ __| | __| |" + LINE_ENDING +
+        " | |_| |/ _ \\ | |/ _ \\   \\ \\ /\\ / / _ \\| '__| |/ _` |" + LINE_ENDING +
+        " |  _  |  __/ | | (_) |   \\ V  V / (_) | |  | | (_| |" + LINE_ENDING +
+        " |_| |_|\\___|_|_|\\___/     \\_/\\_/ \\___/|_|  |_|\\__,_|" + LINE_ENDING +
+        "                                                     " + LINE_ENDING;
     assertEquals(expectedAsciiArt, asciiArt);
   }
 
   private void assertEqualsAsciiArtMultiLine(String asciiArt, boolean printAppendNewLine) {
     String expectedAsciiArt = (printAppendNewLine ? LINE_ENDING : "")  +
-        "  _   _          _   _         " + LINE_ENDING +
-        " | | | |   ___  | | | |   ___  " + LINE_ENDING +
-        " | |_| |  / _ \\ | | | |  / _ \\ " + LINE_ENDING +
-        " |  _  | |  __/ | | | | | (_) |" + LINE_ENDING +
-        " |_| |_|  \\___| |_| |_|  \\___/ " + LINE_ENDING +
-        "                               " + LINE_ENDING +
-        " __        __                 _       _ " + LINE_ENDING +
-        " \\ \\      / /   ___    _ __  | |   __| |" + LINE_ENDING +
-        "  \\ \\ /\\ / /   / _ \\  | '__| | |  / _` |" + LINE_ENDING +
-        "   \\ V  V /   | (_) | | |    | | | (_| |" + LINE_ENDING +
-        "    \\_/\\_/     \\___/  |_|    |_|  \\__,_|" + LINE_ENDING +
-        "                                        " + LINE_ENDING;
+        "  _   _      _ _       " + LINE_ENDING +
+        " | | | | ___| | | ___  " + LINE_ENDING +
+        " | |_| |/ _ \\ | |/ _ \\ " + LINE_ENDING +
+        " |  _  |  __/ | | (_) |" + LINE_ENDING +
+        " |_| |_|\\___|_|_|\\___/ " + LINE_ENDING +
+        "                       " + LINE_ENDING +
+        " __        __         _     _ " + LINE_ENDING +
+        " \\ \\      / /__  _ __| | __| |" + LINE_ENDING +
+        "  \\ \\ /\\ / / _ \\| '__| |/ _` |" + LINE_ENDING +
+        "   \\ V  V / (_) | |  | | (_| |" + LINE_ENDING +
+        "    \\_/\\_/ \\___/|_|  |_|\\__,_|" + LINE_ENDING +
+        "                              " + LINE_ENDING;
     assertEquals(expectedAsciiArt, asciiArt);
   }
 
 }
+
