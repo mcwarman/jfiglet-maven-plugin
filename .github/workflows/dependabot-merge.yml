@@ -1,0 +1,29 @@
+name: dependabot-merge
+
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - "check"
+
+jobs:
+  attempt-automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get workflow_run.conclusion
+        uses: octokit/request-action@v2.1.7
+        id: get_conclusion
+        with:
+          route: GET /repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: merge-if-build-success
+        uses: ridedott/merge-me-action@v2
+        if: |
+          github.event.workflow_run.conclusion == 'success' ||
+          fromJson(steps.get_conclusion.outputs.data).conclusion  == 'success'
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRESET: DEPENDABOT_MINOR
+          MERGE_METHOD: MERGE
