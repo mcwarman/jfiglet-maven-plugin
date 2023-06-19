@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: adopt
-          java-version: 8
+          java-version: 17
       - name: Verify with Maven
         run: mvn -B verify --file pom.xml
 
